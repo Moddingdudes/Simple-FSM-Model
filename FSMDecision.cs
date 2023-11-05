@@ -9,6 +9,8 @@ namespace CyberneticStudios.FSM
     /// </summary>
     public abstract class FSMDecision : MonoBehaviour
     {
+        [Header("FSMDecision Settings")]
+        [SerializeField] private bool _flipDecision = false; //Flips decision via a NOT operation. If the decision is determined false, it will now be true
 
         public event System.Action<bool> OnDecisionStateChanged;
 
@@ -23,7 +25,7 @@ namespace CyberneticStudios.FSM
 
         protected void ChangeDecisionStateInternal(bool decisionState)
         {
-            OnDecisionStateChanged?.Invoke(decisionState);
+            OnDecisionStateChanged?.Invoke(_flipDecision ? !decisionState : decisionState);
         }
     }
 }
