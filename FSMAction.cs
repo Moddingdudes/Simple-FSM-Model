@@ -23,22 +23,33 @@ namespace CyberneticStudios.FSM
         protected virtual void Start() { }
         protected virtual void OnDestroy() { }
 
-        protected virtual void OnActionActivated() { }
-        protected virtual void OnActionDisabled() { }
 
-        public virtual void ActionUpdate() { }
+        /// <summary>
+        /// Implemented in FSMActions when it needs to be updated every tick.
+        /// </summary>
+        protected virtual void ActionUpdate() { }
+
+        /// <summary>
+        /// Implemented in FSMActions when it needs to do something on startup.
+        /// EX: Change Navigation Algorithm
+        /// </summary>
+        protected virtual void OnActionEnabled() { }
+
+        /// <summary>
+        /// Implemented in FSMActions when it needs to do something when disabled.
+        /// EX: Change Navigation Algorithm
+        /// </summary>
+        protected virtual void OnActionDisabled() { }
 
         public void ActivateAction()
         {
             _actionActivated = true;
-
-            OnActionActivated();
+            OnActionEnabled();
         }
 
         public void DisableAction()
         {
             _actionActivated = false;
-
             OnActionDisabled();
         }
     }
