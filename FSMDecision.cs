@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace CyberneticStudios.FSM
@@ -11,20 +12,37 @@ namespace CyberneticStudios.FSM
     {
         [Header("FSMDecision Settings")]
         [SerializeField] private bool _flipDecision = false; //Flips decision via a NOT operation. If the decision is determined false, it will now be true
+        [SerializeField] private bool _debugDecisionStateChange;
 
         public event System.Action<bool> OnDecisionStateChanged;
 
-        protected virtual void Start() { }
-        protected virtual void OnDestroy() { }
+        protected virtual void Awake() { }
+
+        protected virtual void Start()
+        {
+            OnDecisionEnabled();
+        }
+
+        protected virtual void OnDestroy()
+        {
+            OnDecisionDisabled();
+        }
+
         protected virtual void Update()
         {
             OnDecisionUpdate();
         }
 
+        protected virtual void OnDecisionEnabled() { }
+
+        protected virtual void OnDecisionDisabled() { }
+
         protected virtual void OnDecisionUpdate() { }
 
         protected void ChangeDecisionStateInternal(bool decisionState)
         {
+            if (_debugDecisionStateChange)
+                Debug.Log($"Changing decision state of {gameObject.name}: {!decisionState}->{decisionState}");
             OnDecisionStateChanged?.Invoke(_flipDecision ? !decisionState : decisionState);
         }
     }

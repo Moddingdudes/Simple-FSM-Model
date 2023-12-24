@@ -11,12 +11,13 @@ namespace CyberneticStudios.FSM
         [Header("FiniteStateMachine Settings")]
         [SerializeField] private List<FSMTransition> _transitions = new List<FSMTransition>();
         [SerializeField] private FSMState _defaultState;
+        [SerializeField] private bool _debugTransitionStateChanges;
 
         private FSMState _activeState;
 
         public FSMState ActiveState => _activeState;
-
-        private void Awake()
+            
+        private void Start()
         {
             ChangeState(null, _defaultState);
 
@@ -29,6 +30,9 @@ namespace CyberneticStudios.FSM
         private void OnTransitionStateChanged(FSMState fromState, FSMState toState)
         {
             ChangeState(fromState, toState);
+
+            if (_debugTransitionStateChanges)
+                Debug.Log($"Transition state changed: {fromState}->{toState}");
         }
 
         private void ChangeState(FSMState oldState, FSMState newState)

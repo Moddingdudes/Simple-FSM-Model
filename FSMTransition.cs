@@ -17,7 +17,7 @@ namespace CyberneticStudios.FSM
         //Passes in the before state and after state
         public event System.Action<FSMState, FSMState> OnTransitionStateChanged;
 
-        private void Awake()
+        private void Start()
         {
             _decision.OnDecisionStateChanged += OnDecisionStateChanged;
         }
