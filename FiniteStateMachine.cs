@@ -17,6 +17,8 @@ namespace CyberneticStudios.FSM
         private FSMState _activeState;
 
         public FSMState ActiveState => _activeState;
+
+        public bool FSMEnabled => _fsmEnabled;
             
         private void Start()
         {
